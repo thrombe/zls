@@ -6,5 +6,5 @@ const Io = std.Io;
 const vk = @import("vulkan");
 
 pub fn main(_: std.process.Init) !void {
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+    std.debug.print("printing vk.TRUE: {d}", .{@as(u32, vk.TRUE)});
 }
