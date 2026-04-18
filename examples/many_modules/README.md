@@ -2,12 +2,12 @@
 
 ## Summary
 
-ZLS fails to resolve `@cImport` includes when a project has multiple modules.
+ZLS fails to resolve `@cImport` and `@import` when a project has multiple modules.
 
 The code compiles fine, but ZLS breaks things like:
 
 * go to definition
-* resolving `@cInclude("c.h")`
+* resolving `@cInclude("c.h")` or `@import("cbindings")`
 
 ---
 
@@ -15,24 +15,27 @@ The code compiles fine, but ZLS breaks things like:
 
 1. Open the project in an editor with ZLS
 2. Go to `src/common.zig`
-3. Try "go to definition" on `c.h`
+3. Try "go to definition" on `c.h` or on `@import("cbindings")`
 
-It works.
+It fails to resolve.
 
 Now:
 
-4. Uncomment this in `src/root.zig`:
+4. Uncomment this if condition in `build.zig`:
 
 ```zig
-const common = @import("common.zig");
+    ...
+    // if (false) //
+    {
+    ...
 ```
 
 5. Restart ZLS
 
 Now:
 
-* `c.h` can no longer be resolved
-* go-to-definition stops working
+* both `c.h` and `cbindings` imports can be resolved
+* go-to-definition starts working
 
 ---
 
@@ -46,7 +49,7 @@ This project builds correctly, so the setup is valid.
 
 ## Actual behavior
 
-* ZLS fails to resolve `@cInclude("c.h")`
+* ZLS fails to resolve `@cInclude("c.h")` and `@import("cbindings")`
 * only happens when multiple modules reference the same file
 * restarting ZLS does not fix it
 
