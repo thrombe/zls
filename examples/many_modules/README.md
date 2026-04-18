@@ -55,6 +55,10 @@ This project builds correctly, so the setup is valid.
 ## Root cause
 
 After some debugging, i found that `DocumentStore.getAssociatedBuildFile` returns only the first root_source_file that references a file (like `common.zig`).
+here's the relavant code:
+- [the call to collectIncludeDirs](https://github.com/zigtools/zls/blob/295cedd8ddd040c77e6666ddab6ef6da8c0beffa/src/features/goto.zig#L264)
+- [the call to getAssociatedBuildFile](https://github.com/zigtools/zls/blob/295cedd8ddd040c77e6666ddab6ef6da8c0beffa/src/DocumentStore.zig#L1723)
+- [build file resolution](https://github.com/zigtools/zls/blob/295cedd8ddd040c77e6666ddab6ef6da8c0beffa/src/DocumentStore.zig#L290-L301)
 
 But in this setup:
 

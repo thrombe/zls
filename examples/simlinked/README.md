@@ -48,9 +48,9 @@ Since the project builds correctly, both setups are valid and should behave iden
 
 ## Root cause
 
-After some debugging, i found that in `DocumentStore.isAssociatedWith`
-
-ZLS does not normalize or resolve symlinks when associating files with their `root_source_file`.
+After some debugging, i found that in `DocumentStore.isAssociatedWith`, ZLS does not normalize or
+resolve symlinks when associating files with their `root_source_file`.
+Particularly, [this uri.eql()](https://github.com/zigtools/zls/blob/295cedd8ddd040c77e6666ddab6ef6da8c0beffa/src/DocumentStore.zig#L139) call is the problem
 
 So when the project is opened through a symlink:
 
